@@ -56,10 +56,14 @@ include_directories(
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
      Classes/HelloWorldScene.cpp
+     Classes/IslandsMap.cpp
+     Classes/TortugaScene.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/HelloWorldScene.h
+     Classes/IslandsMap.h
+     Classes/TortugaScene.h
      )
 
 if(ANDROID)
