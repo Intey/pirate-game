@@ -16,11 +16,9 @@ bool TortugaScene::init()
         return false;
     }
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto sprite = Sprite::create("Coasts/Tortuga.png");
-    auto sw = sprite->getBoundingBox().size.width;
-    auto sh = sprite->getBoundingBox().size.height;
-    sprite->setScaleX(visibleSize.width/sw);
-    sprite->setScaleY(visibleSize.height/sh);
+    auto sprite = Sprite::create("Coasts/TortugaCoast.png");
+    sprite->setAnchorPoint({0, 0});
+    sprite->setPosition(0, 0);
     this->addChild(sprite);
     return true;
 }

@@ -5,6 +5,7 @@
 #include <cocos/math/Vec2.h>
 #include <cocos/base/CCEventMouse.h>
 #include <cocos/base/CCEventListenerMouse.h>
+#include <cocos/base/CCEventListenerTouch.h>
 #include <cocos/base/CCEventDispatcher.h>
 #include <cocos/base/CCVector.h>
 
@@ -12,21 +13,23 @@
 
 using namespace cocos2d;
 
-std::function<void(EventMouse* event)> createOnClick(Sprite* sprite,
-                                                     Scene* islandScene)
+EventListenerTouchOneByOne::ccTouchBeganCallback createOnClick(Sprite* sprite,
+                   Scene* islandScene)
 {
     // захватываем владение сценой. Без этого будет падать на pushScene, мол счетчик
     // ссылок нулевой
     islandScene->retain();
-    return [sprite, islandScene](EventMouse* event) {
-        auto loc = event->getLocation();
-        if(sprite->getBoundingBox().containsPoint(loc))
+    return [sprite, islandScene](Touch* touch, Event* event) -> bool {
+        auto bb = event->getCurrentTarget()->getBoundingBox();
+        auto loc = touch->getLocation();
+        if(bb.containsPoint(loc))
         {
-            printf("clicked sprite\n");
             auto director = Director::getInstance();
             // declare tortuga scene
             director->pushScene(islandScene);
+            return true;
         }
+        return false;
     };
 }
 
@@ -34,9 +37,10 @@ IslandsMap::IslandsMap(Scene * scene)
 {
     // привязываем обработчик событий к сцене. Только на сцене карты мы обрабатываем
     // нажатия на острова
-    EventListenerMouse * elm { EventListenerMouse::create() };
+    EventListenerTouchOneByOne * elm { EventListenerTouchOneByOne::create() };
     auto dispatcher = scene->getEventDispatcher(); //new EventDispatcher();
 
+    // наполняем карту спрайтами островов
     Sprite * tortugaSprite { Sprite::create("Coasts/Tortuga.png") };
     if (tortugaSprite)
     {
@@ -51,7 +55,7 @@ IslandsMap::IslandsMap(Scene * scene)
             printf("cant create tortuga scene");
             return;
         }
-        elm->onMouseUp = createOnClick(tortugaSprite, scene); // handler;
+        elm->onTouchBegan = createOnClick(tortugaSprite, scene); // handler;
         dispatcher->addEventListenerWithSceneGraphPriority(elm, tortugaSprite);
     }
     else
