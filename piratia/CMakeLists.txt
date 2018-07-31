@@ -52,18 +52,26 @@ include_directories(
         Classes
         ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 )
-# add cross-platforms source files and header files 
+# add cross-platforms source files and header files
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
+     Classes/ArenaScene.cpp
+     Classes/FindPairScene.cpp
      Classes/HelloWorldScene.cpp
      Classes/IslandsMap.cpp
+     Classes/MineScene.cpp
      Classes/TortugaScene.cpp
+     utilities.cpp
      )
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
+     Classes/ArenaScene.h
+     Classes/FindPairScene.h
      Classes/HelloWorldScene.h
      Classes/IslandsMap.h
+     Classes/MineScene.h
      Classes/TortugaScene.h
+     utilities.h
      )
 
 if(ANDROID)

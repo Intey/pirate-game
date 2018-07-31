@@ -29,7 +29,7 @@ public:
 
 private:
     std::vector<cocos2d::Sprite*> m_coastSprites;
-    std::vector<cocos2d::Scene*> m_scenes;
+    cocos2d::Scene* m_tortugaScene;
 
 };
 
