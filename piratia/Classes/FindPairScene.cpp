@@ -37,22 +37,44 @@ public:
         m_game->update(delta);
 
     }
-
 private:
+    bool handleTouch(Touch *touch, Event *event)
+    {
+        auto touchLoc = touch->getLocation();
+        auto bbox = event->getCurrentTarget()->getBoundingBox();
+        // Если мы жмакнули по карте
+        if (bbox.containsPoint(touchLoc))
+        {
+            auto sprite = dynamic_cast<Sprite*>(event->getCurrentTarget());
+            int id = sprite->getTag();
+            int i = id / 100;
+            int j = id % 100;
+
+            // меняем отображение текущей карты
+            m_game->openCard(i, j);
+            auto currentCard = m_game->getCard(i, j);
+            auto texture = getTextureForCard(currentCard);
+            sprite->setTexture(texture);
+
+            auto firstOpenedCard = m_game->getOpenedCard();
+            auto tag = m_game->getCardId(firstOpenedCard);
+            auto firstOpenedCardNode = this->getChildByTag(tag);
+            // меняем отображение парной(т.е. первой открытой) карты
+            if (firstOpenedCardNode)
+            {
+                auto sprite = dynamic_cast<Sprite*>(firstOpenedCardNode);
+                auto texture = getTextureForCard(firstOpenedCard);
+                sprite->setTexture(texture);
+            }
+
+        }
+        return false;
+
+    }
+
     void renderGame()
     {
-        // auto fieldSprite = Sprite::create("Cards/Field.png");
-        // fieldSprite->setAnchorPoint({0, 0});
-        // fieldSprite->setPosition(0, 0);
-        // if (!fieldSprite) {
-        //     cout << "error loading find pair cards field image" << endl;
-        //     return;
-        // }
-
         this->setColor(Color3B{0, 180, 0});
-        // this->addChild(fieldSprite);
-
-        // отрисовать сетку игры, все карты
         int const marginX = 15;
         int const marginY = 10;
         int x = 0;
@@ -82,38 +104,10 @@ private:
                 // клика с нужной картой
                 auto listener = EventListenerTouchOneByOne::create();
                 listener->setSwallowTouches(true);
-                listener->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
-                    auto touchLoc = touch->getLocation();
-                    auto bbox = event->getCurrentTarget()->getBoundingBox();
-                    // Если мы жмакнули по карте
-                    if (bbox.containsPoint(touchLoc))
-                    {
-                        auto sprite = dynamic_cast<Sprite*>(event->getCurrentTarget());
-                        int id = sprite->getTag();
-                        int i = id / 100;
-                        int j = id % 100;
-
-                        // меняем отображение текущей карты
-                        m_game->openCard(i, j);
-                        auto currentCard = m_game->getCard(i, j);
-                        auto texture = getTextureForCard(currentCard);
-                        sprite->setTexture(texture);
-
-                        auto firstOpenedCard = m_game->getOpenedCard();
-                        auto tag = m_game->getCardId(firstOpenedCard);
-                        auto firstOpenedCardNode = this->getChildByTag(tag);
-                        // меняем отображение парной(т.е. первой открытой) карты
-                        if (firstOpenedCardNode)
-                        {
-                            auto sprite = dynamic_cast<Sprite*>(firstOpenedCardNode);
-                            auto texture = getTextureForCard(firstOpenedCard);
-                            sprite->setTexture(texture);
-                        }
-
-                    }
-                    return false;
-                };
-                _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, cardShirt);
+                listener->onTouchBegan =
+                        CC_CALLBACK_2(FindPairGameLayer::handleTouch, this);
+                _eventDispatcher->addEventListenerWithSceneGraphPriority(listener,
+                                                                         cardShirt);
             }
             y += 40; // размер спрайта карты
             y += marginY;
@@ -181,3 +175,4 @@ bool FindPairScene::init()
     this->addChild(layer);
     return true;
 }
+
