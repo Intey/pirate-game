@@ -60,7 +60,7 @@ Card FindPairGame::getCard(int i, int j) {
 void FindPairGame::openCard(int i, int j) {
     if (m_over) return;
 
-    // если первая карта есть(закрыта) или это старый кеш
+    // если первая карта закрыта или уже запарена (т.е. это старый кеш)
     if (!m_firstCard.opened || m_firstCard.paired)
     {
         m_firstCard = m_cards[i][j];

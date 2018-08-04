@@ -85,6 +85,7 @@ private:
                 listener->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
                     auto touchLoc = touch->getLocation();
                     auto bbox = event->getCurrentTarget()->getBoundingBox();
+                    // Если мы жмакнули по карте
                     if (bbox.containsPoint(touchLoc))
                     {
                         auto sprite = dynamic_cast<Sprite*>(event->getCurrentTarget());
@@ -101,7 +102,7 @@ private:
                         auto firstOpenedCard = m_game->getOpenedCard();
                         auto tag = m_game->getCardId(firstOpenedCard);
                         auto firstOpenedCardNode = this->getChildByTag(tag);
-                        // меняем отображение парной
+                        // меняем отображение парной(т.е. первой открытой) карты
                         if (firstOpenedCardNode)
                         {
                             auto sprite = dynamic_cast<Sprite*>(firstOpenedCardNode);
