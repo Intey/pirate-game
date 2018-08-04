@@ -1,95 +1,169 @@
-#include "FindPairScene.h"
+#include <iostream>
+
 #include <cocos/base/CCScheduler.h>
-#include <functional>
+#include <cocos/2d/CCSprite.h>
+#include <cocos/base/CCEventDispatcher.h>
+#include <cocos/base/CCEventListenerTouch.h>
+#include <cocos/2d/CCLayer.h>
 
-struct Card {
-    Card(int value): value(value) {}
+#include "FindPairGame.h"
+#include "FindPairScene.h"
 
-    int value;
-    bool paired = false;
-};
+using namespace cocos2d;
+
 /**
- * @brief Класс логики игры "найди пару". После инициализации должен быть добавлен
- * в "планировщик"(schedule), по шаблону проектирование "Update method"
+ * @brief The FindPairGameLayer class
+ * # rendering
+ * При инициализации рисуются все карты закрытыми. При открытии карты,
+ * открываемая перерисовывается. Если открывается вторая, и значения у них не совпадают - обе карты перерисовываются
  */
-class FindPairGame {
+class FindPairGameLayer : public Layer {
+
 public:
-    FindPairGame(int timeout = 1 * 60, int card_variants_count = 20):
-        GAME_TIMEOUT(timeout),
-        CARD_VARIANTS_COUNT(card_variants_count)
+    CREATE_FUNC(FindPairGameLayer)
+
+    // Node interface
+public:
+    bool init() {
+        m_game = new FindPairGame(60, CARDS_VARIANTS);
+
+        this->renderGame();
+
+
+        m_game->start();
+        return true;
+    }
+    void update(float delta) {
+        m_game->update(delta);
+
+    }
+
+private:
+    void renderGame()
     {
-        assert(CARD_VARIANTS_COUNT %2 == 0
-               && "Варианты карт должны быть четным числом, т.к. игра про пары");
-        start();
+        // auto fieldSprite = Sprite::create("Cards/Field.png");
+        // fieldSprite->setAnchorPoint({0, 0});
+        // fieldSprite->setPosition(0, 0);
+        // if (!fieldSprite) {
+        //     cout << "error loading find pair cards field image" << endl;
+        //     return;
+        // }
+
+        this->setColor(Color3B{0, 180, 0});
+        // this->addChild(fieldSprite);
+
+        // отрисовать сетку игры, все карты
+        int const marginX = 15;
+        int const marginY = 10;
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < CARDS_VARIANTS - 1; i++)
+        {
+            y += marginY;
+            x = 0;
+            for(int j = 0; j < CARDS_VARIANTS; j++)
+            {
+                auto cardShirt = Sprite::create("Cards/CardShirt.png");
+                if (!cardShirt) return;
+                cardShirt->setAnchorPoint({0, 0});
+
+                x += marginX;
+                cardShirt->setPosition(x, y);
+                x += 30; // размер спрайта карты
+                x += marginX;
+                // добавляем спрайт с id, чтобы при клике вытащить координаты карты в
+                // игре
+                int id = m_game->getCardId(i, j);
+                this->addChild(cardShirt, 1, id);
+
+                // создаем обработчик клика по каждой карте. Можно наверно сделать 1
+                // обработчик на все поле, но тогда нужно где-то хранить связку
+                // спрайт-карта чтобы в этом обработчике искать опять же пересечение
+                // клика с нужной картой
+                auto listener = EventListenerTouchOneByOne::create();
+                listener->setSwallowTouches(true);
+                listener->onTouchBegan = [this](Touch* touch, Event* event) -> bool {
+                    auto touchLoc = touch->getLocation();
+                    auto bbox = event->getCurrentTarget()->getBoundingBox();
+                    if (bbox.containsPoint(touchLoc))
+                    {
+                        auto sprite = dynamic_cast<Sprite*>(event->getCurrentTarget());
+                        int id = sprite->getTag();
+                        int i = id / 100;
+                        int j = id % 100;
+
+                        // меняем отображение текущей карты
+                        m_game->openCard(i, j);
+                        auto currentCard = m_game->getCard(i, j);
+                        auto texture = getTextureForCard(currentCard);
+                        sprite->setTexture(texture);
+
+                        auto firstOpenedCard = m_game->getOpenedCard();
+                        auto tag = m_game->getCardId(firstOpenedCard);
+                        auto firstOpenedCardNode = this->getChildByTag(tag);
+                        // меняем отображение парной
+                        if (firstOpenedCardNode)
+                        {
+                            auto sprite = dynamic_cast<Sprite*>(firstOpenedCardNode);
+                            auto texture = getTextureForCard(firstOpenedCard);
+                            sprite->setTexture(texture);
+                        }
+
+                    }
+                    return false;
+                };
+                _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, cardShirt);
+            }
+            y += 40; // размер спрайта карты
+            y += marginY;
+        }
     }
 
-    void update(float dt) {
-        if (m_over) return;
-        m_elapsed += dt;
-        if (m_elapsed >= GAME_TIMEOUT) m_over = true;
-    }
-    void start() {
-        m_openedCard = nullptr;
-        m_over = false;
-        m_elapsed = 0;
-
-        m_restToOpen = CARD_VARIANTS_COUNT * CARD_VARIANTS_COUNT;
-        m_cards.reserve(CARD_VARIANTS_COUNT * CARD_VARIANTS_COUNT);
-        for (int i = 0; i < CARD_VARIANTS_COUNT; i++) {
-            m_cards[i].reserve(CARD_VARIANTS_COUNT);
-            for (int j = 0; i < CARD_VARIANTS_COUNT; j++) {
-                m_cards[i][j] = Card { std::rand() % CARD_VARIANTS_COUNT };
+    std::string getTextureForCard(Card const& card) {
+        // открытая карта
+        std::string filename;
+        if (card.opened && !card.paired)
+        {
+            switch (card.value) {
+            case 1:
+                filename = "Cards/One.png";
+                break;
+            case 2:
+                filename = "Cards/Two.png";
+                break;
+            case 3:
+                filename = "Cards/Three.png";
+                break;
+            case 4:
+                filename = "Cards/Four.png";
+                break;
+            case 5:
+                filename = "Cards/Five.png";
+                break;
+            case 6:
+                filename = "Cards/Six.png";
+                break;
+            default:
+                break;
             }
         }
-    }
-
-    void stop() {
-        m_over = true;
-    }
-
-    void openCard(int i, int j) {
-        if (m_over) return;
-
-        if (!m_openedCard)
+        // закрытая карта
+        else if (!card.opened)
         {
-            m_openedCard = &m_cards[i][j];
-            return;
+            filename = "Cards/CardShirt.png";
         }
+        // else {} // запаренная. Не показываем
 
-        if (m_openedCard->value > 0 && m_cards[i][j].value == m_openedCard->value)
-        {
-            closePair(m_openedCard, &m_cards[i][j]);
-            return;
-        }
-
-        m_openedCard = nullptr;
+        return filename;
     }
-
-    int getScore() { return m_score; }
 private:
-    void closePair(Card * a, Card * b) {
-        a->paired = true;
-        b->paired = true;
-        m_restToOpen -= 2;
-        m_score++;
-        if (m_restToOpen == 0) {
-            m_over = true;
-        }
-    }
-
-private:
-    /// открытая карта. Если следующая - парная, удаляем пару, иначе - закрываем
-    Card* m_openedCard;
-    float m_elapsed; /// прошло секунд игры
-    bool m_over; /// игра завершена
-    int m_restToOpen; /// осталось открыть карт
-    int m_score; /// очки выигрышные
-    const int GAME_TIMEOUT;
-    const int CARD_VARIANTS_COUNT;
-private:
-    std::vector<std::vector<Card>> m_cards;
+    FindPairGame* m_game;
+    static const std::string M_GAME_NAME;
+    static const int CARDS_VARIANTS;
 };
 
+const std::string FindPairGameLayer::M_GAME_NAME = "FIND_PAIR";
+const int FindPairGameLayer::CARDS_VARIANTS = 6;
 
 FindPairScene *FindPairScene::createScene()
 {
@@ -98,16 +172,11 @@ FindPairScene *FindPairScene::createScene()
 
 bool FindPairScene::init()
 {
-    if (!Scene::init()) return false;
-    m_game.reset(new FindPairGame());
+    if (!Scene::init()) {
+        return false;
+    }
 
-    using namespace std::placeholders;
-    this->schedule(CC_CALLBACK_1(FindPairGame::update, m_game.get()), 1, M_GAME_NAME);
+    FindPairGameLayer *layer = FindPairGameLayer::create();
+    this->addChild(layer);
     return true;
-}
-
-void FindPairScene::renderGame()
-{
-    // отрисовать сетку игры, все карты
-
 }

@@ -6,7 +6,7 @@
 #include <cocos/base/CCEventListenerTouch.h>
 #include <cocos/base/CCEventDispatcher.h>
 #include "../utilities.h"
-#include "MineScene.h"
+#include "FindPairScene.h"
 #include "ArenaScene.h"
 
 using namespace cocos2d;
@@ -73,7 +73,7 @@ bool TortugaScene::initMine()
     sprite->setAnchorPoint({0,0});
     // 25 - половина размера спрайта шахты
     sprite->setPosition(105-25, 95-25);
-    m_mineScene = MineScene::createScene();
+    m_mineScene = FindPairScene::createScene();
     auto eventListener = EventListenerTouchOneByOne::create();
     auto handler = createSceneTransitionOnSpriteClick(sprite, m_mineScene);
     eventListener->onTouchBegan = handler;

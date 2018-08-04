@@ -1,4 +1,5 @@
 #include "MineScene.h"
+#include "FindPairScene.h"
 
 cocos2d::Scene *MineScene::createScene()
 {

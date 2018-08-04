@@ -56,6 +56,7 @@ include_directories(
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
      Classes/ArenaScene.cpp
+     Classes/FindPairGame.cpp
      Classes/FindPairScene.cpp
      Classes/HelloWorldScene.cpp
      Classes/IslandsMap.cpp
@@ -66,6 +67,7 @@ list(APPEND GAME_SOURCE
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/ArenaScene.h
+     Classes/FindPairGame.h
      Classes/FindPairScene.h
      Classes/HelloWorldScene.h
      Classes/IslandsMap.h
