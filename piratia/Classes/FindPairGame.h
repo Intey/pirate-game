@@ -31,9 +31,9 @@ public:
 
     void update(float dt);
     void start();
-    void stop() {
-        m_over = true;
-    }
+    void stop() { m_over = true; m_elapsed = 0; }
+    bool isOver() const { return m_over; }
+    int restSeconds() const { return static_cast<int>(GAME_TIMEOUT - m_elapsed); }
     std::vector<Card> getCards();
 
     Card getCard(int i, int j);
@@ -54,8 +54,9 @@ protected:
     Card m_firstCard;
     float m_elapsed; /// прошло секунд игры
     bool m_over; /// игра завершена
-    int m_restToOpen; /// осталось открыть карт
-    int m_score; /// очки выигрышные
+    /// осталось открыть карт
+    int m_restToOpen = CARD_VARIANTS_COUNT*CARD_VARIANTS_COUNT;
+    int m_score = 0; /// очки выигрышные
     const int GAME_TIMEOUT;
     const int CARD_VARIANTS_COUNT;
 private:

@@ -4,6 +4,12 @@
 #include <cocos/2d/CCScene.h>
 #include <string>
 
+class FindPairGameLayer;
+
+namespace cocos2d {
+class Layer;
+}
+
 /**
  * @brief Сцена мини-игры "найди пару".
  */
@@ -13,7 +19,14 @@ public:
     CREATE_FUNC(FindPairScene)
 
     static FindPairScene *createScene();
-    virtual bool init();
+    virtual bool init() override;
+
+    virtual void onEnter() override;
+public:
+    void reward(int score);
+
+private:
+    FindPairGameLayer* m_gameLayer;
 };
 
 

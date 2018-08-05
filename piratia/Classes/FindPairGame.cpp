@@ -82,7 +82,7 @@ void FindPairGame::closePair(Card & a, Card & b) {
     a.pair();
     b.pair();
     m_restToOpen -= 2;
-    m_score++;
+    m_score+= 10;
     if (m_restToOpen == 0) {
         m_over = true;
     }
