@@ -57,9 +57,10 @@ list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
      Classes/ArenaScene.cpp
      Classes/FindPairGame.cpp
+     Classes/FindPairGameLayer.cpp
      Classes/FindPairScene.cpp
-     Classes/MapScene.cpp
      Classes/IslandsMap.cpp
+     Classes/MapScene.cpp
      Classes/MineScene.cpp
      Classes/TortugaScene.cpp
      utilities.cpp
@@ -68,9 +69,10 @@ list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/ArenaScene.h
      Classes/FindPairGame.h
+     Classes/FindPairGameLayer.cpp
      Classes/FindPairScene.h
-     Classes/MapScene.h
      Classes/IslandsMap.h
+     Classes/MapScene.h
      Classes/MineScene.h
      Classes/TortugaScene.h
      utilities.h

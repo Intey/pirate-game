@@ -2,6 +2,15 @@
 #define FINDPAIRGAME_H
 
 #include <vector>
+#include <string>
+
+struct Reward {
+    Reward(int score): value(score) {}
+    int value;
+    std::string toString() const {
+        return std::string("Score: ") + std::to_string(value);
+    }
+};
 
 struct Card {
     Card(): i(-1), j(-1), opened(false), paired(true) {}
@@ -33,7 +42,11 @@ public:
     void start();
     void stop() { m_over = true; m_elapsed = 0; }
     bool isOver() const { return m_over; }
-    int restSeconds() const { return static_cast<int>(GAME_TIMEOUT - m_elapsed); }
+    int restSeconds() const {
+        // вычитаем прошедшее время из таймаута. Делаем "+1", потому что округление
+        // в меньшую сторону, а мы не хотим видеть 0 целую секунду
+        return static_cast<int>(GAME_TIMEOUT - m_elapsed + 1);
+    }
     std::vector<Card> getCards();
 
     Card getCard(int i, int j);
