@@ -9,5 +9,6 @@ cocos2d::Scene *MineScene::createScene()
 bool MineScene::init()
 {
     if (!Scene::init()) return false;
+    setName("MineScene");
     return true;
 }

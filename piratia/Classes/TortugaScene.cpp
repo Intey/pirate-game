@@ -23,6 +23,7 @@ bool TortugaScene::init()
         std::cout << "no base Scene init" << std::endl;
         return false;
     }
+    setName("TourtugaScene");
     auto sprite = Sprite::create("Coasts/TortugaCoast.png");
     if (!sprite) {
         std::cout << "no TortugaCoast sprite" << std::endl;
@@ -74,6 +75,7 @@ bool TortugaScene::initMine()
     // 25 - половина размера спрайта шахты
     sprite->setPosition(105-25, 95-25);
     m_mineScene = FindPairScene::createScene();
+    m_mineScene->retain();
     auto eventListener = EventListenerTouchOneByOne::create();
     auto handler = createSceneTransitionOnSpriteClick(sprite, m_mineScene);
     eventListener->onTouchBegan = handler;

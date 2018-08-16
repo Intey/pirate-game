@@ -15,6 +15,11 @@ const std::string FindPairGameLayer::M_GAME_NAME = "FIND_PAIR";
 const int FindPairGameLayer::CARDS_VARIANTS = 6;
 const int FindPairGameLayer::GAME_TIMEOUT = 60;
 
+FindPairGameLayer::~FindPairGameLayer()
+{
+    m_parentScene->release();
+}
+
 bool FindPairGameLayer::init() {
     if (!Layer::init()) return false;
     m_game = new FindPairGame(GAME_TIMEOUT, CARDS_VARIANTS);
@@ -39,8 +44,8 @@ void FindPairGameLayer::onEnter() {
 }
 
 void FindPairGameLayer::onExit() {
-    Layer::onExit();
     m_game->stop();
+    Layer::onExit();
 }
 
 void FindPairGameLayer::update(float delta) {
@@ -57,6 +62,11 @@ void FindPairGameLayer::update(float delta) {
         if (restSeconds <= 10)
             m_restSecondsView->setTextColor({255, 0, 0, 255});
     }
+}
+
+void FindPairGameLayer::setScene(FindPairScene *parentScene) {
+    m_parentScene = parentScene;
+    m_parentScene->retain();
 }
 
 bool FindPairGameLayer::handleTouch(Touch *touch, Event *event)

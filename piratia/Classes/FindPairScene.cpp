@@ -26,6 +26,7 @@ bool FindPairScene::init()
     if (!Scene::init()) {
         return false;
     }
+    setName("FindPairScene");
     m_gameLayer = FindPairGameLayer::create();
     m_gameLayer->setScene(this);
     if (m_gameLayer)
@@ -39,7 +40,14 @@ bool FindPairScene::init()
 void FindPairScene::onEnter()
 {
     Scene::onEnter();
+    init();
     schedule(CC_CALLBACK_1(FindPairGameLayer::update, m_gameLayer), "updateLayer");
+}
+
+void FindPairScene::onExit()
+{
+    unschedule("updateLayer");
+    Scene::onExit();
 }
 
 void FindPairScene::reward(int score)
@@ -57,8 +65,9 @@ void FindPairScene::reward(int score)
     label->setAnchorPoint({0.5, 0.5});
     label->setPosition(size.width/2, size.height/2);
     rewardLayer->addChild(label);
-    this->scheduleOnce([](float) {
+    this->scheduleOnce([this, rewardLayer](float) {
         Director::getInstance()->popScene(); // завершаем текущую сцену
+        this->removeChild(rewardLayer);
     }, 2, "exitFindPairScene");
 
     this->addChild(rewardLayer);

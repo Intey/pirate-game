@@ -19,6 +19,7 @@ class FindPairGameLayer : public cocos2d::Layer {
 public:
     CREATE_FUNC(FindPairGameLayer)
 
+    virtual ~FindPairGameLayer();
     // Node interface
 public:
     virtual bool init() override;
@@ -30,9 +31,7 @@ public:
     virtual void update(float delta) override;
 
 public:
-    void setScene(FindPairScene* parentScene) {
-        m_parentScene = parentScene;
-    }
+    void setScene(FindPairScene* parentScene);
 
 private:
     bool handleTouch(cocos2d::Touch *touch, cocos2d::Event *event);

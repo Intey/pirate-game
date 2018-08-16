@@ -15,14 +15,14 @@ EventListenerTouchOneByOne::ccTouchBeganCallback createSceneTransitionOnSpriteCl
     // захватываем владение сценой. Без этого будет падать на pushScene, мол счетчик
     // ссылок нулевой
     scene->retain();
-    return [=](Touch* touch, Event* event) -> bool {
+    return [scene](Touch* touch, Event* event) -> bool {
         auto bb = event->getCurrentTarget()->getBoundingBox();
         auto loc = touch->getLocation();
         if(bb.containsPoint(loc))
         {
             auto director = Director::getInstance();
             director->pushScene(scene);
-            scene->release();
+            scene->autorelease();
             return true;
         }
         return false;
