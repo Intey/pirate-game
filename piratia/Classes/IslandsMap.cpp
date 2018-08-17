@@ -35,7 +35,9 @@ IslandsMap::IslandsMap(Scene * scene)
             return;
         }
         m_tortugaScene = tortugaScene;
-        elm->onTouchBegan = createSceneTransitionOnSpriteClick(tortugaSprite, tortugaScene); // handler;
+        if (!m_tortugaScene) return;
+        m_tortugaScene->retain();
+        elm->onTouchBegan = createSceneTransitionOnSpriteClick(tortugaScene); // handler;
         dispatcher->addEventListenerWithSceneGraphPriority(elm, tortugaSprite);
     }
     else

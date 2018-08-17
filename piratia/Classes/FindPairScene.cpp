@@ -17,6 +17,10 @@ using namespace Game;
  * При инициализации рисуются все карты закрытыми. При открытии карты,
  * открываемая перерисовывается. Если открывается вторая, и значения у них не совпадают - обе карты перерисовываются
  */
+FindPairScene::~FindPairScene()
+{
+}
+
 FindPairScene *FindPairScene::createScene()
 {
     return FindPairScene::create();
@@ -28,6 +32,12 @@ bool FindPairScene::init()
         return false;
     }
     setName("FindPairScene");
+    return true;
+}
+
+void FindPairScene::onEnter()
+{
+    Scene::onEnter();
     m_gameLayer = FindPairGameLayer::create();
     m_gameLayer->setScene(this);
     if (m_gameLayer)
@@ -35,13 +45,6 @@ bool FindPairScene::init()
         this->addChild(m_gameLayer);
     }
 
-    return true;
-}
-
-void FindPairScene::onEnter()
-{
-    Scene::onEnter();
-    init();
     schedule(CC_CALLBACK_1(FindPairGameLayer::update, m_gameLayer), "updateLayer");
 }
 

@@ -16,6 +16,6 @@ class Scene;
  * @return функция-обработчик клика
  */
 cocos2d::EventListenerTouchOneByOne::ccTouchBeganCallback
-createSceneTransitionOnSpriteClick(cocos2d::Sprite* sprite, cocos2d::Scene* scene);
+createSceneTransitionOnSpriteClick(cocos2d::Scene *scene);
 
 #endif // UTILITIES_H

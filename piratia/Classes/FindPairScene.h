@@ -17,6 +17,7 @@ class FindPairScene: public cocos2d::Scene
 {
 public:
     CREATE_FUNC(FindPairScene)
+    virtual ~FindPairScene();
 
     static FindPairScene *createScene();
     virtual bool init() override;

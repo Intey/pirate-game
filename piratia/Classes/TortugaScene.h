@@ -14,6 +14,7 @@ public:
     virtual bool init();
 
     CREATE_FUNC(TortugaScene)
+    virtual ~TortugaScene();
 
     bool initArena();
     bool initMine();

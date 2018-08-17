@@ -10,11 +10,9 @@
 
 using namespace cocos2d;
 
-EventListenerTouchOneByOne::ccTouchBeganCallback createSceneTransitionOnSpriteClick(cocos2d::Sprite *sprite, cocos2d::Scene *scene)
+EventListenerTouchOneByOne::ccTouchBeganCallback
+createSceneTransitionOnSpriteClick(cocos2d::Scene *scene)
 {
-    // захватываем владение сценой. Без этого будет падать на pushScene, мол счетчик
-    // ссылок нулевой
-    scene->retain();
     return [scene](Touch* touch, Event* event) -> bool {
         auto bb = event->getCurrentTarget()->getBoundingBox();
         auto loc = touch->getLocation();
@@ -22,7 +20,6 @@ EventListenerTouchOneByOne::ccTouchBeganCallback createSceneTransitionOnSpriteCl
         {
             auto director = Director::getInstance();
             director->pushScene(scene);
-            scene->autorelease();
             return true;
         }
         return false;

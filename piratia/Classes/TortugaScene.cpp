@@ -39,6 +39,12 @@ bool TortugaScene::init()
     return true;
 }
 
+TortugaScene::~TortugaScene()
+{
+    m_mineScene->release();
+    m_arenaScene->release();
+}
+
 bool TortugaScene::initArena()
 {
     auto sprite = Sprite::create("Arena.png");
@@ -52,8 +58,10 @@ bool TortugaScene::initArena()
 
     // обработка клика по спрайту
     m_arenaScene = ArenaScene::createScene();
+    if (!m_arenaScene) return false;
+    m_arenaScene->retain(); // захватыываем, чтобы в лямбдах это не умирало
     auto eventListener = EventListenerTouchOneByOne::create();
-    auto handler = createSceneTransitionOnSpriteClick(sprite, m_arenaScene);
+    auto handler = createSceneTransitionOnSpriteClick(m_arenaScene);
     eventListener->onTouchBegan = handler;
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, sprite);
 
@@ -75,9 +83,10 @@ bool TortugaScene::initMine()
     // 25 - половина размера спрайта шахты
     sprite->setPosition(105-25, 95-25);
     m_mineScene = FindPairScene::createScene();
+    if(!m_mineScene) return false;
     m_mineScene->retain();
     auto eventListener = EventListenerTouchOneByOne::create();
-    auto handler = createSceneTransitionOnSpriteClick(sprite, m_mineScene);
+    auto handler = createSceneTransitionOnSpriteClick(m_mineScene);
     eventListener->onTouchBegan = handler;
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, sprite);
 
