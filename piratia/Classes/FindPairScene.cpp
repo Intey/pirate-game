@@ -4,11 +4,12 @@
 #include <cocos/2d/CCLabel.h>
 #include <cocos/base/CCDirector.h>
 
-#include "FindPairGame.h"
+#include "../Game/FindPairGame.h"
 #include "FindPairScene.h"
 #include "FindPairGameLayer.h"
 
 using namespace cocos2d;
+using namespace Game;
 
 /**
  * @brief The FindPairGameLayer class

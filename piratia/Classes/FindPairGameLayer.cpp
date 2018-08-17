@@ -1,7 +1,7 @@
 #include <string>
 
 #include "FindPairGameLayer.h"
-#include "FindPairGame.h"
+#include "../Game/FindPairGame.h"
 #include "FindPairScene.h"
 
 #include <cocos/2d/CCSprite.h>
@@ -9,6 +9,7 @@
 #include <cocos/base/CCEventDispatcher.h>
 #include <cocos/base/CCEventListenerTouch.h>
 
+using namespace Game;
 using namespace cocos2d;
 
 const std::string FindPairGameLayer::M_GAME_NAME = "FIND_PAIR";

@@ -56,25 +56,42 @@ include_directories(
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
      Classes/ArenaScene.cpp
-     Classes/FindPairGame.cpp
      Classes/FindPairGameLayer.cpp
      Classes/FindPairScene.cpp
      Classes/IslandsMap.cpp
      Classes/MapScene.cpp
      Classes/MineScene.cpp
      Classes/TortugaScene.cpp
+     Game/ArmorBody.cpp
+     Game/CraftAbility.cpp
+     Game/FindPairGame.cpp
+     Game/Inventory.cpp
+     Game/Item.cpp
+     Game/Player.cpp
+     Game/Reciepe.cpp
+     Game/Resource.cpp
+     Game/Weapon.cpp
      utilities.cpp
      )
+
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/ArenaScene.h
-     Classes/FindPairGame.h
      Classes/FindPairGameLayer.cpp
      Classes/FindPairScene.h
      Classes/IslandsMap.h
      Classes/MapScene.h
      Classes/MineScene.h
      Classes/TortugaScene.h
+     Game/ArmorBody.h
+     Game/CraftAbility.h
+     Game/FindPairGame.h
+     Game/Inventory.h
+     Game/Item.h
+     Game/Player.h
+     Game/Reciepe.cpp
+     Game/Resource.h
+     Game/Weapon.h
      utilities.h
      )
 

@@ -10,9 +10,12 @@ class Touch;
 
 }
 
-class FindPairScene;
+namespace Game {
 class Card;
 class FindPairGame;
+}
+
+class FindPairScene;
 
 class FindPairGameLayer : public cocos2d::Layer {
 
@@ -38,10 +41,10 @@ private:
 
     void renderGame();
 
-    std::string getTextureForCard(Card const& card);
+    std::string getTextureForCard(Game::Card const& card);
 private:
     FindPairScene* m_parentScene;
-    FindPairGame* m_game;
+    Game::FindPairGame* m_game;
     cocos2d::Label* m_restSecondsView;
     static const std::string M_GAME_NAME;
     static const int CARDS_VARIANTS;
