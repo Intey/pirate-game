@@ -11,13 +11,13 @@ public:
     Item();
     Item(const std::string & name);
     virtual ~Item() = default;
-    std::string name() const;
+    virtual std::string name() const;
 
     virtual Item clone() const;
 
-    operator bool() const;
-    bool operator==(Item const& o) const;
-    bool operator<(Item const& o) const;
+    virtual operator bool() const;
+    virtual bool operator==(Item const& o) const;
+    virtual bool operator<(Item const& o) const;
 
 private:
     std::string m_name;
