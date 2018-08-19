@@ -1,28 +1,27 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
+#include <map>
 #include <vector>
 #include <string>
 #include "Item.h"
+#include "structures.h"
+#include <game_core_export.h>
 
 namespace Game {
 
-
-class Inventory
+class GAME_CORE_EXPORT Inventory
 {
 public:
+
     Inventory();
 
-    void addItem(Item const& item);
-    /**
-     * @brief вычитает ресурсы из инвенторя
-     * @param items вычитаемое
-     * @return список не удаленных (не достающих) предметов.
-     * Если список пуст - значит удаление прошло успешно
-     */
-    std::vector<Item> substract(std::vector<Item> const& items);
+    void addItem(Item const& item, int count=1);
+    bool substract(const ItemPacks &diff);
+    bool has(const ItemPacks & diff) const;
+    ItemPacks diff(const ItemPacks &sources) const;
 private:
-    std::vector<Item> m_items;
+    ItemPacks m_items;
 };
 
 } // namespace

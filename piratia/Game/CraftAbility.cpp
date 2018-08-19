@@ -1,21 +1,21 @@
 #include "CraftAbility.h"
 #include "Inventory.h"
 #include "Reciepe.h"
+#include "Item.h"
 
 namespace Game {
-CraftAbility::CraftAbility(const std::shared_ptr<Inventory> &inventory)
+CraftAbility::CraftAbility(const std::shared_ptr<Inventory> &inventory) noexcept
     :m_inventory(inventory)
 {
 
 }
 
-bool CraftAbility::craft(const Reciepe &reciepe) const
+Item CraftAbility::craft(const Reciepe &reciepe) const
 {
-    if (!m_inventory->substract(reciepe.sources()).empty())
-        return false;
-
-    m_inventory->addItem(reciepe.createTarget());
-
+    if (m_inventory->substract(reciepe.sources()))
+        return reciepe.createTarget();
+    else
+        return Item();
 }
 
 } // namespace

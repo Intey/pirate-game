@@ -62,15 +62,6 @@ list(APPEND GAME_SOURCE
      Classes/MapScene.cpp
      Classes/MineScene.cpp
      Classes/TortugaScene.cpp
-     Game/ArmorBody.cpp
-     Game/CraftAbility.cpp
-     Game/FindPairGame.cpp
-     Game/Inventory.cpp
-     Game/Item.cpp
-     Game/Player.cpp
-     Game/Reciepe.cpp
-     Game/Resource.cpp
-     Game/Weapon.cpp
      utilities.cpp
      )
 
@@ -83,15 +74,6 @@ list(APPEND GAME_HEADER
      Classes/MapScene.h
      Classes/MineScene.h
      Classes/TortugaScene.h
-     Game/ArmorBody.h
-     Game/CraftAbility.h
-     Game/FindPairGame.h
-     Game/Inventory.h
-     Game/Item.h
-     Game/Player.h
-     Game/Reciepe.cpp
-     Game/Resource.h
-     Game/Weapon.h
      utilities.h
      )
 
@@ -152,9 +134,10 @@ set(APP_SRC
     ${GAME_SOURCE}
     ${GAME_HEADER}
     )
+
 cocos_build_app(${APP_NAME}
                 APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "cocos2d"
+                DEPEND_COMMON_LIBS "cocos2d" "game_core"
                 DEPEND_ANDROID_LIBS "cocos2d_android"
                 )
 
@@ -175,3 +158,5 @@ endif()
 if(LINUX OR WINDOWS)
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
+
+add_subdirectory(Game)

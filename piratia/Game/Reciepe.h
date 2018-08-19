@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <map>
 
 namespace Game {
 
@@ -12,13 +13,17 @@ class Item;
 class Reciepe
 {
 public:
-    Reciepe(std::string const& name, std::shared_ptr<Item> const& target, std::vector<Item> const& sources);
-    std::vector<Item> sources() const;
+    using ItemPacks=std::map<Item, int>;
+public:
+    Reciepe(std::string const& name, std::shared_ptr<Item> const& target,
+            ItemPacks const& sources);
+
+    ItemPacks sources() const;
     Item createTarget() const;
 
 private:
     std::string m_name;
-    std::vector<Item> m_sources;
+    ItemPacks m_sources;
     std::shared_ptr<Item> m_target;
 };
 

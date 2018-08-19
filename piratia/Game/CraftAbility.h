@@ -3,6 +3,10 @@
 
 #include <memory>
 
+#include <game_core_export.h>
+
+#include "structures.h"
+
 namespace Game {
 
 class Inventory;
@@ -11,11 +15,12 @@ class Reciepe;
 /**
  * @brief Создает объект - удаляет объекты из инвентаря и добавляет в него созданный
  */
-class CraftAbility
+class GAME_CORE_EXPORT CraftAbility
 {
 public:
-    CraftAbility(std::shared_ptr<Inventory> const& inventory);
-    bool craft(Reciepe const& reciepe) const;
+    explicit CraftAbility(std::shared_ptr<Inventory> const& inventory) noexcept;
+    Item craft(Reciepe const& reciepe) const;
+
 private:
     std::shared_ptr<Inventory> m_inventory;
 };
