@@ -28,7 +28,7 @@ IslandsMap::IslandsMap(Scene * scene)
         // auto h = sprite->getBoundingBox().size.height;
         tortugaSprite->setPosition(Vec2(0, 0));
         this->m_coastSprites.push_back( tortugaSprite );
-        auto tortugaScene = TortugaScene::createScene();
+        auto tortugaScene = TortugaScene::create();
         if (!tortugaScene)
         {
             printf("cant create tortuga scene");

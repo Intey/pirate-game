@@ -21,10 +21,6 @@ FindPairScene::~FindPairScene()
 {
 }
 
-FindPairScene *FindPairScene::createScene()
-{
-    return FindPairScene::create();
-}
 
 bool FindPairScene::init()
 {

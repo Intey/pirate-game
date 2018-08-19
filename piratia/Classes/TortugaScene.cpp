@@ -11,10 +11,6 @@
 
 using namespace cocos2d;
 
-Scene *TortugaScene::createScene()
-{
-    return TortugaScene::create();
-}
 
 bool TortugaScene::init()
 {
@@ -57,7 +53,7 @@ bool TortugaScene::initArena()
     m_arena = sprite;
 
     // обработка клика по спрайту
-    m_arenaScene = ArenaScene::createScene();
+    m_arenaScene = ArenaScene::create();
     if (!m_arenaScene) return false;
     m_arenaScene->retain(); // захватыываем, чтобы в лямбдах это не умирало
     auto eventListener = EventListenerTouchOneByOne::create();
@@ -82,7 +78,7 @@ bool TortugaScene::initMine()
     sprite->setAnchorPoint({0,0});
     // 25 - половина размера спрайта шахты
     sprite->setPosition(105-25, 95-25);
-    m_mineScene = FindPairScene::createScene();
+    m_mineScene = FindPairScene::create();
     if(!m_mineScene) return false;
     m_mineScene->retain();
     auto eventListener = EventListenerTouchOneByOne::create();

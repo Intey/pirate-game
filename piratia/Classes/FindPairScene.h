@@ -19,7 +19,6 @@ public:
     CREATE_FUNC(FindPairScene)
     virtual ~FindPairScene();
 
-    static FindPairScene *createScene();
     virtual bool init() override;
 
     virtual void onEnter() override;
