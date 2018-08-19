@@ -1,5 +1,6 @@
 #include "Player.h"
 
+namespace Game {
 Player *Player::getInstance()
 {
     static Player* instance;
@@ -13,3 +14,5 @@ Player::Player() noexcept
 {
 
 }
+
+} // namespace

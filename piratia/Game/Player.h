@@ -1,8 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+#include <game_core_export.h>
 
 
-class Player
+namespace Game {
+
+class GAME_CORE_EXPORT Player
 {
 public:
     static Player* getInstance();
@@ -17,4 +20,5 @@ private:
     ~Player();
 };
 
+} // namespace
 #endif // PLAYER_H

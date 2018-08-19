@@ -2,10 +2,11 @@
 #define RESOURCE_H
 
 #include "Item.h"
+#include <game_core_export.h>
 
 namespace Game {
 
-class Resource: public Item {
+class GAME_CORE_EXPORT Resource: public Item {
 public:
     Resource(int count, std::string const& name);
 private:
