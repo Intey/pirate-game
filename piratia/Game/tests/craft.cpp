@@ -1,4 +1,4 @@
-#include "../Reciepe.h"
+#include "../Recipe.h"
 #include "../Inventory.h"
 #include "../CraftAbility.h"
 #include <cassert>
@@ -29,18 +29,18 @@ void testEmptyInventoryCraft()
     inventory->addItem(wood);
 
     std::shared_ptr<Item> target { new Item("Sword") };
-    Reciepe::ItemPacks sources;
+    Recipe::ItemPacks sources;
     sources[ironIgnot] = 4;
     sources[wood] = 1;
 
-    Reciepe reciepe {"simple sword", target, sources };
+    Recipe recipe {"simple sword", target, sources };
 
     // проверяем, что ресурсов хватит. Чтобы показывать возможность крафта того или иного рецепта
     expect(!inventory->has(sources),
           "должно быть проверено, что в инвентаре нет ресурсов");
 
     CraftAbility ability { inventory };
-    auto required_resources = inventory->diff(reciepe.sources());
+    auto required_resources = inventory->diff(recipe.sources());
     expectEq(required_resources[ironIgnot], 4,
           "по рецепту нужно 4 железных слитка");
     expect(required_resources.find(wood) == required_resources.end(),
@@ -54,7 +54,7 @@ void testMatchingInventory()
     std::shared_ptr<Item> target { new Item("Sword") };
     Item ironIgnot { "iron ignot" };
     Item wood { "wood" };
-    Reciepe::ItemPacks sources;
+    Recipe::ItemPacks sources;
     for (int i = 0; i < 4; ++i) {
         inventory->addItem(ironIgnot);
     }
@@ -62,10 +62,10 @@ void testMatchingInventory()
     sources[ironIgnot] = 4;
     sources[wood] = 1;
 
-    Reciepe reciepe {"simple sword", target, sources };
+    Recipe recipe {"simple sword", target, sources };
 
     // проверяем, что ресурсов хватит. Чтобы показывать возможность крафта того или иного рецепта
-    auto resultItem = ability.craft(reciepe);
+    auto resultItem = ability.craft(recipe);
     expectEq(resultItem, *target,
              "когда ресурсов хватает, должен создаваться предмет");
 }

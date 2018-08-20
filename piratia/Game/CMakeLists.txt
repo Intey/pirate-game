@@ -7,7 +7,7 @@ list(APPEND GAME_SOURCE
      Inventory.cpp
      Item.cpp
      Player.cpp
-     Reciepe.cpp
+     Recipe.cpp
      Resource.cpp
      Weapon.cpp
      )
@@ -20,7 +20,7 @@ list(APPEND GAME_HEADER
      Inventory.h
      Item.h
      Player.h
-     Reciepe.cpp
+     Recipe.cpp
      Resource.h
      structures.h
      Weapon.h

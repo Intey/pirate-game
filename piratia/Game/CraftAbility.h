@@ -10,7 +10,7 @@
 namespace Game {
 
 class Inventory;
-class Reciepe;
+class Recipe;
 
 /**
  * @brief Создает объект - удаляет объекты из инвентаря и добавляет в него созданный
@@ -19,7 +19,7 @@ class GAME_CORE_EXPORT CraftAbility
 {
 public:
     explicit CraftAbility(std::shared_ptr<Inventory> const& inventory) noexcept;
-    Item craft(Reciepe const& reciepe) const;
+    Item craft(Recipe const& recipe) const;
 
 private:
     std::shared_ptr<Inventory> m_inventory;

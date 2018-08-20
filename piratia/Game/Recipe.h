@@ -10,12 +10,12 @@ namespace Game {
 
 class Item;
 
-class Reciepe
+class Recipe
 {
 public:
     using ItemPacks=std::map<Item, int>;
 public:
-    Reciepe(std::string const& name, std::shared_ptr<Item> const& target,
+    Recipe(std::string const& name, std::shared_ptr<Item> const& target,
             ItemPacks const& sources);
 
     ItemPacks sources() const;
