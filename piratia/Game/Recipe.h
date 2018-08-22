@@ -6,20 +6,21 @@
 #include <vector>
 #include <map>
 
-namespace Game {
+#include "Item.h"
+#include "structures.h"
 
-class Item;
+namespace Game {
 
 class Recipe
 {
-public:
-    using ItemPacks=std::map<Item, int>;
 public:
     Recipe(std::string const& name, std::shared_ptr<Item> const& target,
             ItemPacks const& sources);
 
     ItemPacks sources() const;
     Item createTarget() const;
+
+    std::string name() const;
 
 private:
     std::string m_name;

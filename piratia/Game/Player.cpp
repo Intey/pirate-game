@@ -10,9 +10,15 @@ Player *Player::getInstance()
     return instance;
 }
 
-Player::Player() noexcept
+std::shared_ptr<CraftAbility> Player::getCraftAbility() const
 {
+    return m_craftAbility;
+}
 
+Player::Player()
+{
+    m_inventory.reset(new Inventory());
+    m_craftAbility.reset(new CraftAbility(m_inventory));
 }
 
 } // namespace

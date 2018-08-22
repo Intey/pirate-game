@@ -29,7 +29,7 @@ void testEmptyInventoryCraft()
     inventory->addItem(wood);
 
     std::shared_ptr<Item> target { new Item("Sword") };
-    Recipe::ItemPacks sources;
+    ItemPacks sources;
     sources[ironIgnot] = 4;
     sources[wood] = 1;
 
@@ -54,7 +54,7 @@ void testMatchingInventory()
     std::shared_ptr<Item> target { new Item("Sword") };
     Item ironIgnot { "iron ignot" };
     Item wood { "wood" };
-    Recipe::ItemPacks sources;
+    ItemPacks sources;
     for (int i = 0; i < 4; ++i) {
         inventory->addItem(ironIgnot);
     }

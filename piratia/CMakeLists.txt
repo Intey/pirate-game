@@ -58,6 +58,7 @@ list(APPEND GAME_SOURCE
      Classes/ArenaScene.cpp
      Classes/FindPairGameLayer.cpp
      Classes/FindPairScene.cpp
+     Classes/ForgeScene.cpp
      Classes/IslandsMap.cpp
      Classes/MapScene.cpp
      Classes/MineScene.cpp
@@ -70,6 +71,7 @@ list(APPEND GAME_HEADER
      Classes/ArenaScene.h
      Classes/FindPairGameLayer.cpp
      Classes/FindPairScene.h
+     Classes/ForgeScene.h
      Classes/IslandsMap.h
      Classes/MapScene.h
      Classes/MineScene.h

@@ -8,6 +8,7 @@
 #include "../utilities.h"
 #include "FindPairScene.h"
 #include "ArenaScene.h"
+#include "ForgeScene.h"
 
 using namespace cocos2d;
 
@@ -32,6 +33,7 @@ bool TortugaScene::init()
 
     if (!initMine()) return false;
     if (!initArena()) return false;
+    if (!initForge()) return false;
     return true;
 }
 
@@ -86,6 +88,30 @@ bool TortugaScene::initMine()
     eventListener->onTouchBegan = handler;
     _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, sprite);
 
+    this->addChild(sprite);
+    return true;
+
+}
+
+bool TortugaScene::initForge()
+{
+    auto sprite = Sprite::create("Forge.png");
+    if (!sprite)
+    {
+        std::cout << "no forge prite" << std::endl;
+        return false;
+    }
+
+    sprite->setAnchorPoint({0, 0});
+    sprite->setPosition(350-25, 95-25);
+
+    m_forgeScene = ForgeScene::create();
+    if (!m_forgeScene) return false;
+    m_forgeScene->retain();
+    auto eventListener = EventListenerTouchOneByOne::create();
+    auto handler = createSceneTransitionOnSpriteClick(m_forgeScene);
+    eventListener->onTouchBegan = handler;
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, sprite);
     this->addChild(sprite);
     return true;
 

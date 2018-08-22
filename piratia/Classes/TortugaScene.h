@@ -17,11 +17,13 @@ public:
 
     bool initArena();
     bool initMine();
+    bool initForge();
 private:
     cocos2d::Sprite* m_mine;
     cocos2d::Sprite* m_arena;
     cocos2d::Scene* m_mineScene;
     cocos2d::Scene* m_arenaScene;
+    cocos2d::Scene* m_forgeScene;
 };
 
 #endif // TORTUGASCENE_H
