@@ -9,6 +9,7 @@ list(APPEND GAME_SOURCE
      Player.cpp
      Recipe.cpp
      Resource.cpp
+     Reward.cpp
      Weapon.cpp
      )
 
@@ -22,6 +23,7 @@ list(APPEND GAME_HEADER
      Player.h
      Recipe.cpp
      Resource.h
+     Reward.h
      structures.h
      Weapon.h
      )

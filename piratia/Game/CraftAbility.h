@@ -11,6 +11,7 @@
 
 namespace Game {
 
+class Reward;
 class Inventory;
 
 /**
@@ -26,6 +27,7 @@ public:
     Item craft(Recipe const& recipe) const;
 
     std::vector<Recipe> recipes() const;
+    Reward multiplyReward(Reward const& reward) const;
 
 private:
     std::shared_ptr<Inventory> m_inventory;

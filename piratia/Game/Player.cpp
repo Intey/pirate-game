@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Reward.h"
 
 namespace Game {
 Player *Player::getInstance()
@@ -13,6 +14,12 @@ Player *Player::getInstance()
 std::shared_ptr<CraftAbility> Player::getCraftAbility() const
 {
     return m_craftAbility;
+}
+
+void Player::ownReward(const Reward &reward)
+{
+    // reward.value()
+    // m_inventory->addItem()
 }
 
 Player::Player()

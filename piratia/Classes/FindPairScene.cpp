@@ -5,6 +5,8 @@
 #include <cocos/base/CCDirector.h>
 
 #include "../Game/FindPairGame.h"
+#include "../Game/Player.h"
+#include "../Game/Reward.h"
 #include "FindPairScene.h"
 #include "FindPairGameLayer.h"
 
@@ -65,9 +67,12 @@ void FindPairScene::reward(int score)
     label->setAnchorPoint({0.5, 0.5});
     label->setPosition(size.width/2, size.height/2);
     rewardLayer->addChild(label);
-    this->scheduleOnce([this, rewardLayer](float) {
+    this->scheduleOnce([this, rewardLayer, &reward](float) {
         Director::getInstance()->popScene(); // завершаем текущую сцену
         this->removeChild(rewardLayer);
+        reward = Player::getInstance()->getCraftAbility()->multiplyReward(reward);
+        Player::getInstance()->ownReward(reward);
+
     }, 2, "exitFindPairScene");
 
     this->addChild(rewardLayer);

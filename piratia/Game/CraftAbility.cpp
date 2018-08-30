@@ -1,6 +1,7 @@
 #include "CraftAbility.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "Reward.h"
 
 namespace Game {
 CraftAbility::CraftAbility(const std::shared_ptr<Inventory> &inventory) noexcept
@@ -22,6 +23,11 @@ Item CraftAbility::craft(const Recipe &recipe) const
 std::vector<Recipe> CraftAbility::recipes() const
 {
     return m_recipes;
+}
+
+Reward CraftAbility::multiplyReward(const Reward &reward) const
+{
+    return reward;
 }
 
 } // namespace

@@ -10,12 +10,15 @@
 
 namespace Game {
 
+class Reward;
+
 class GAME_CORE_EXPORT Player
 {
 public:
     static Player* getInstance();
     std::shared_ptr<CraftAbility> getCraftAbility() const;
 
+    void ownReward(Reward const& reward);
     // думаю не стоит размещать на стеке данные синглтона: только потратим стек на
     // всю игру, а выигрыша от выделений не будет
 private:
