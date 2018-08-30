@@ -22,6 +22,10 @@ public:
 
     std::string name() const;
 
+    std::string getTargetName() const;
+
+    bool operator==(Recipe const& other) const;
+
 private:
     std::string m_name;
     ItemPacks m_sources;

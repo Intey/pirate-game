@@ -31,6 +31,7 @@ public:
 public:
     cocos2d::ui::Widget* renderRecipesList(std::vector<Game::Recipe> const& reciepes);
     cocos2d::ui::Widget* renderRecipeItem(Game::Recipe const& recipe) const;
+    cocos2d::ui::Widget* renderReciepePreview(const Game::Recipe &recipe);
     cocos2d::ui::Widget* renderReciepePreview();
     cocos2d::ui::Widget* renderCraftLevelProgressbar();
     cocos2d::ui::Widget* renderCraftButton();
