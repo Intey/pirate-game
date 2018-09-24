@@ -69,7 +69,7 @@ list(APPEND GAME_SOURCE
 list(APPEND GAME_HEADER
      Classes/AppDelegate.h
      Classes/ArenaScene.h
-     Classes/FindPairGameLayer.cpp
+     Classes/FindPairGameLayer.h
      Classes/FindPairScene.h
      Classes/ForgeScene.h
      Classes/IslandsMap.h

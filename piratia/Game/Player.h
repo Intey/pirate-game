@@ -21,6 +21,10 @@ public:
     void ownReward(Reward const& reward);
     // думаю не стоит размещать на стеке данные синглтона: только потратим стек на
     // всю игру, а выигрыша от выделений не будет
+    std::shared_ptr<Inventory> getInventory() const;
+
+private:
+    void ownMineReward(Reward const& reward);
 private:
     std::shared_ptr<Inventory> m_inventory;
     std::shared_ptr<CraftAbility> m_craftAbility;

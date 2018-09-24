@@ -3,6 +3,7 @@
 
 #include <game_core_export.h>
 #include <string>
+#include <map>
 
 namespace Game {
 
@@ -13,12 +14,16 @@ namespace Game {
 class GAME_CORE_EXPORT Reward {
 public:
     Reward() noexcept;
-    Reward(int score);
     std::string toString() const;
-    int value() const;
+    void add(std::string const& name, int value);
 
+    std::map<std::string, int> values() const;
+
+    static const std::string TYPE;
 private:
-    int m_value;
+    /// тип награды. В зависимости от нее, будет выбран набор предметов, которые можно
+    /// выиграть в игру
+    std::map<std::string, int> m_values;
 };
 
 } // namespace

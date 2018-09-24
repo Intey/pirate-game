@@ -1,3 +1,4 @@
+#include <Ore.h>
 #include <string>
 
 #include "FindPairGameLayer.h"
@@ -53,7 +54,7 @@ void FindPairGameLayer::update(float delta) {
     m_game->update(delta);
     if (m_game->isOver())
     {
-        m_parentScene->reward(m_game->getScore());
+        m_parentScene->reward(m_game->getReward());
         removeFromParent();
     }
     else {
@@ -150,28 +151,7 @@ std::string FindPairGameLayer::getTextureForCard(const Card &card) {
     std::string filename;
     if (card.opened && !card.paired)
     {
-        switch (card.value) {
-        case 1:
-            filename = "Cards/One.png";
-            break;
-        case 2:
-            filename = "Cards/Two.png";
-            break;
-        case 3:
-            filename = "Cards/Three.png";
-            break;
-        case 4:
-            filename = "Cards/Four.png";
-            break;
-        case 5:
-            filename = "Cards/Five.png";
-            break;
-        case 6:
-            filename = "Cards/Six.png";
-            break;
-        default:
-            break;
-        }
+        filename = std::string("Cards/") + card.type + "Ore.png";
     }
     // закрытая карта
     else if (!card.opened)

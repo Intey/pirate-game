@@ -6,6 +6,10 @@
 
 class FindPairGameLayer;
 
+namespace Game {
+class Reward;
+}
+
 namespace cocos2d {
 class Layer;
 }
@@ -24,7 +28,7 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
 public:
-    void reward(int score);
+    void reward(const Game::Reward &rawReward);
 
 private:
     FindPairGameLayer* m_gameLayer;

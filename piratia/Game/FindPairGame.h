@@ -3,31 +3,24 @@
 
 #include <vector>
 #include <string>
+#include "Reward.h"
 
 namespace Game {
 
-/**
- * @brief Класс "добычи" из игры.
- * @details Используется для создания вида-отображения для экрана
- */
-struct Reward {
-    Reward(int score): value(score) {}
-    int value;
-    std::string toString() const {
-        return std::string("Score: ") + std::to_string(value);
-    }
-};
 
-struct Card {
-    Card(): i(-1), j(-1), opened(false), paired(true) {}
-    Card(int value, int i, int j): value(value), i(i), j(j) {}
+class Card {
 public:
-    int value = -1;
+    Card() = default;
+    explicit Card(int i, int j, int value, std::string type):
+        i(i), j(j), value(value), type(type) {}
+public:
+    int i = -1;
+    int j = -1;
     bool opened = false; // карта в данный момент открыта и видна игроку
     bool paired = false; // карта "запарена", т.е. ее не нужно отображать
-    int i;
-    int j;
-
+    int value = -1;
+    std::string type;
+public:
     void pair() { opened = true; paired = true; }
 
     operator bool() const {
@@ -58,7 +51,7 @@ public:
     Card getCard(int i, int j);
     void openCard(int i, int j);
 
-    int getScore() { return m_score; }
+    Reward getReward();
 
     Card getOpenedCard() const;
 
@@ -75,10 +68,10 @@ protected:
     bool m_over; /// игра завершена
     /// осталось открыть карт
     int m_restToOpen = CARD_VARIANTS_COUNT*CARD_VARIANTS_COUNT;
-    int m_score = 0; /// очки выигрышные
     const int GAME_TIMEOUT;
     const int CARD_VARIANTS_COUNT;
 private:
+    Reward m_reward;
     std::vector<std::vector<Card>> m_cards;
 };
 

@@ -52,26 +52,27 @@ void FindPairScene::onExit()
     Scene::onExit();
 }
 
-void FindPairScene::reward(int score)
+void FindPairScene::reward(Reward const& rawReward)
 {
     unschedule("updateLayer");
-    auto reward = Reward(score);
     auto rewardLayer = LayerColor::create({50, 180, 50, 255});
     rewardLayer->setAnchorPoint({0, 0});
     rewardLayer->setPosition(0, 0);
 
-    auto label = Label::createWithTTF(reward.toString(), "fonts/arial.ttf", 16);
+    auto label = Label::createWithTTF(rawReward.toString(), "fonts/arial.ttf", 16);
     label->setTextColor({255, 255, 255, 255});
     auto size = rewardLayer->getBoundingBox().size;
     // рисуем по центру
     label->setAnchorPoint({0.5, 0.5});
     label->setPosition(size.width/2, size.height/2);
     rewardLayer->addChild(label);
-    this->scheduleOnce([this, rewardLayer, &reward](float) {
+    this->scheduleOnce([this, rewardLayer](float) {
         Director::getInstance()->popScene(); // завершаем текущую сцену
         this->removeChild(rewardLayer);
-        reward = Player::getInstance()->getCraftAbility()->multiplyReward(reward);
-        Player::getInstance()->ownReward(reward);
+
+        Reward rawReward = Player::getInstance()->getCraftAbility()->multiplyReward(rawReward);
+        auto player = Player::getInstance();
+        player->ownReward(rawReward);
 
     }, 2, "exitFindPairScene");
 

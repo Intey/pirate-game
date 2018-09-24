@@ -4,14 +4,10 @@
 #include <cassert>
 #include <iostream>
 
+#include <test_core.h>
+
 using namespace std;
 using namespace Game;
-
-void expect(bool valid, std::string const& message)
-{
-    string result = (valid? "PASS": "FAILED");
-    cout << message << " : " << result << endl;
-}
 
 template<typename T1, typename T2>
 void expectEq(const T1 left, const T2 right, std::string const& message) {

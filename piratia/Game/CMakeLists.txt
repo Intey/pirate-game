@@ -6,6 +6,7 @@ list(APPEND GAME_SOURCE
      FindPairGame.cpp
      Inventory.cpp
      Item.cpp
+     Ore.cpp
      Player.cpp
      Recipe.cpp
      Resource.cpp
@@ -20,8 +21,9 @@ list(APPEND GAME_HEADER
      FindPairGame.h
      Inventory.h
      Item.h
+     Ore.h
      Player.h
-     Recipe.cpp
+     Recipe.h
      Resource.h
      Reward.h
      structures.h
@@ -34,6 +36,6 @@ add_library(game_core
 
 include(GenerateExportHeader)
 generate_export_header(game_core)
-target_include_directories(game_core PUBLIC ${CMAKE_BINARY_DIR}/Game)
+target_include_directories(game_core PUBLIC ${CMAKE_BINARY_DIR}/Game ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(tests)
